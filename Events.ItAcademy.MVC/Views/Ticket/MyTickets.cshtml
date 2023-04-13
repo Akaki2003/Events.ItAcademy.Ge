@@ -1,0 +1,33 @@
+﻿@model List<Events.ItAcademy.Domain.UserTickets.UserTicket>
+
+
+<h1>My Tickets</h1>
+
+@foreach (var item in Model)
+{
+    <div style="margin-bottom:20px;">
+    <div class="card gx-md-3" style="border: 3px solid #ccc; padding: 10px; margin-bottom: 3px;">
+            <h2>Title: @item.Event.Title</h2>
+            <p>TicketId: @item.TicketId</p>
+
+    </div>
+    @if(item.Reserved){
+
+        <a asp-action="BuyBooked" asp-controller="Ticket" asp-route-ticketId="@item.TicketId" class="btn btn-primary">Buy booked ticket</a>
+            <a asp-action="RemoveReservedTicket" asp-controller="Ticket" asp-route-ticketId="@item.TicketId" class="btn btn-primary">Remove booked ticket</a>
+    }
+    </div>
+}
+        <a asp-action="Index" asp-controller="Home" class="btn btn-primary">Back To List</a>
+@*
+<div style="margin-bottom:20px;">
+    <div class="card gx-md-3" style="border: 3px solid #ccc; padding: 10px; margin-bottom: 3px;">
+        <h2>Title: @Model.Event.Title</h2>
+        <p>Price: @Model.TicketId</p>
+
+    </div>
+    <a asp-action="BuyBooked" asp-controller="Ticket" asp-route-eventId="@Model.TicketId" class="btn btn-primary">Buy booked ticket</a>
+    <a asp-action="Index" asp-controller="Home" class="btn btn-primary">Back To List</a>
+
+</div>
+*@

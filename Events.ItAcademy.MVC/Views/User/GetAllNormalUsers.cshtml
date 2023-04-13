@@ -1,0 +1,40 @@
+﻿@model List<Events.ItAcademy.Application.Users.Responses.UserResponseModel>
+@using Events.ItAcademy.Domain.Users
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<User> UserManager
+@inject SignInManager<User> SignInManager
+
+<h1>Users</h1>
+
+@if (Model.Count == 0)
+{
+    <h2>There are no users which you can give moderator</h2>
+    <a asp-controller="Home" asp-action="Index" class="btn btn-primary">Back To List</a>
+}
+
+@{
+    var usr = new User();
+}
+@foreach (var user in Model)
+{
+     usr = await UserManager.FindByIdAsync(user.Id);
+    @foreach (var role in await UserManager.GetRolesAsync(usr))
+    {
+        if(role=="Moderator"||role=="Admin"){
+
+        }
+        else{
+            <div>
+                <h2>@user.Email</h2>
+                <a asp-controller="User" asp-action="MakeModerator" asp-route-userId="@user.Id">Make moderator</a>
+            </div>
+        }
+    }
+@*        <div>
+            <h2>@user.Email</h2>
+        <a asp-controller="User" asp-action="MakeModerator" asp-route-userId="@user.Id">Make moderator</a>
+        </div>*@
+}
+<div>
+    <a asp-action="Index" asp-controller="Home"> Back to List</a>
+</div>

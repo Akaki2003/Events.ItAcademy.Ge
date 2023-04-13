@@ -1,0 +1,36 @@
+﻿@model List<Events.ItAcademy.Application.Events.Responses.EventResponseModel>
+
+@{
+    foreach (var item in Model)
+    {
+        item.PhotoPath = "~/images/" + (item.PhotoPath ?? "noimage.jpg");
+    }
+}
+<h1>Non Active Events</h1>
+
+@foreach (var item in Model)
+{
+    <div style="margin-bottom:20px;">
+        <div class="card gx-md-3" style="border: 3px solid #ccc; justify-content:space-between; display:flex; padding: 10px; margin-bottom: 3px;">
+            <div class="row">
+                <div class="col-md-6">
+                    <h2>Title: @item.Title</h2>
+                    <p>Description: @item.Description</p>
+                    <p>Price: @item.Price</p>
+                    <p>TicketCount: @item.TicketCount</p>
+                    <p>StartDate: @item.StartDate</p>
+                    <p>EndDate: @item.EndDate</p>
+                </div>
+                <div class="col-md-6">
+                    <img class="w-100 h-100 object-cover imageThumbnail" style="border-radius:20px" src="@item.PhotoPath" asp-append-version="true" />
+                </div>
+            </div>
+        </div>
+        <a asp-controller="Events" asp-action="ActivateEvent" asp-route-eventId="@item.Id" class="btn btn-primary">Activate</a>
+        <a asp-controller="Events" asp-action="DeleteEvent" asp-route-eventId="@item.Id" class="btn btn-danger">Remove</a>
+
+
+    </div>
+}
+<a asp-controller="Home" asp-action="Index" class="btn btn-primary">Back To List</a>
+

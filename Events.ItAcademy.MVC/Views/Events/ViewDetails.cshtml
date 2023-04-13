@@ -1,0 +1,48 @@
+﻿@model Events.ItAcademy.Application.Events.Responses.EventResponseModel
+@using Events.ItAcademy.Domain.Users
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<User> UserManager
+@inject SignInManager<User> SignInManager
+
+@{
+    var photoPath = "~/images/" + (Model.PhotoPath ?? "noimage.jpg");
+}
+
+<h1>Details</h1>
+
+<div style="margin-bottom:20px;">
+    <div class="card gx-md-3" style="border: 3px solid #ccc; justify-content:space-between; display:flex; padding: 10px; margin-bottom: 3px;">
+        <div class="row">
+
+            <div class="col-md-6">
+                <h2>Title: @Model.Title</h2>
+                <p>Price: @Model.Price</p>
+                <p>Description: @Model.Description</p>
+                <p>Available Tickets: @Model.TicketCount</p>
+                <p>Start Date: @Model.StartDate</p>
+                <p>End Date: @Model.EndDate</p>
+            </div>
+            <div class="col-md-6">
+                <img class="w-100 h-100 object-cover imageThumbnail" style="border-radius:20px" src="@photoPath" asp-append-version="true" />
+            </div>
+        </div>
+    </div>
+
+    @if (SignInManager.IsSignedIn(User))
+    {
+        @if (Model.TicketCount == 0)
+        {
+            <h2>All the tickets have been sold</h2>
+            <a asp-controller="Ticket" asp-action="BuyStraightTicket" asp-route-eventId="@Model.Id" class="btn btn-primary disabled">Buy</a>
+            <a asp-action="BookTicket" asp-controller="Ticket" asp-route-eventId="@Model.Id" class="btn btn-primary disabled">Book</a>
+        }
+        else
+        {
+            <a asp-controller="Ticket" asp-action="BuyStraightTicket" asp-route-eventId="@Model.Id" class="btn btn-primary">Buy</a>
+            <a asp-action="BookTicket" asp-controller="Ticket" asp-route-eventId="@Model.Id" class="btn btn-primary">Book</a>
+        }
+    }
+
+    <a asp-action="Index" asp-controller="Home" class="btn btn-primary">Back To List</a>
+
+</div>

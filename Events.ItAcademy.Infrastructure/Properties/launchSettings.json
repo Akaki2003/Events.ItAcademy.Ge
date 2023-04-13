@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "Events.ItAcademy.Infrastructure": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:7719;http://localhost:7720"
+    }
+  }
+}

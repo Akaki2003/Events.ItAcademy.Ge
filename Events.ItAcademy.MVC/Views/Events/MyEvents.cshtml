@@ -1,0 +1,41 @@
+﻿@model EventsWithSetupModel
+
+@{
+    foreach (var item in Model.Events)
+    {
+        item.PhotoPath = "~/images/" + (item.PhotoPath ?? "noimage.jpg");
+    }
+}
+
+<h1>My Events</h1>
+
+@foreach (var item in Model.Events)
+{
+
+    <div style="margin-bottom:20px;">
+        <div class="card gx-md-3" style="border: 3px solid #ccc; justify-content:space-between; display:flex; padding: 10px; margin-bottom: 3px;">
+            <div class="row">
+                <div class="col-md-6">
+                    <h2>Title: @item.Title</h2>
+                    <p>Description: @item.Description</p>
+                    <p>Price: @item.Price</p>
+                    <p>TicketCount: @item.TicketCount</p>
+                    <p>StartDate: @item.StartDate</p>
+                    <p>EndDate: @item.EndDate</p>
+                </div>
+                <div class="col-md-6">
+                    <img class="w-100 h-100 object-cover imageThumbnail" style="border-radius:20px" src="@item.PhotoPath" asp-append-version="true" />
+                </div>
+            </div>
+           
+        </div>
+        @if (DateTime.Now < item.CreatedAt.AddDays(Model.EventSetup.EditEventAfterUploadInDays))
+        {
+            <a asp-controller="Events" asp-action="EditEvent" asp-route-eventId="@item.Id" class="btn btn-primary">Edit</a>
+        }
+    </div>
+
+
+}
+<a asp-controller="Home" asp-action="Index" class="btn btn-primary">Back To List</a>
+
